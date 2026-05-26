@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
@@ -14,19 +15,16 @@ const admin = require("../middleware/admin");
 
 const User = require("../models/User");
 
-// Public routes
+// Public Routes
 router.post("/register", register);
 router.post("/login", login);
 
-// Frontend needs this route
+// Logged-in User
 router.get("/me", auth, (req, res) => {
   res.json(req.user);
 });
 
-// Change password route
-router.put("/change-password", auth, changePassword);
-
-// Keep this route for backend testing
+// Protected Test Route
 router.get("/profile", auth, (req, res) => {
   res.json({
     message: "Protected route working",
@@ -34,28 +32,51 @@ router.get("/profile", auth, (req, res) => {
   });
 });
 
-// Team members route
+// Change Password
+router.put("/change-password", auth, changePassword);
+
+// Team Members
 router.get("/team", auth, async (req, res) => {
   try {
+
     const users = await User.find().select("-password");
+
     res.json(users);
+
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+
+    console.log(err);
+
+    res.status(500).json({
+      message: "Server error"
+    });
+
   }
 });
 
-// Admin only route
+// Admin Only Route
 router.get("/all-users", auth, admin, async (req, res) => {
   try {
+
     const users = await User.find().select("-password");
+
     res.json(users);
+
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+
+    console.log(err);
+
+    res.status(500).json({
+      message: "Server error"
+    });
+
   }
 });
-// ← paste here
+
+// Invite User
 router.post("/invite", auth, inviteUser);
+
+// Set Password
 router.post("/set-password", setPassword);
- // ← this stays last
 
 module.exports = router;

@@ -6,15 +6,15 @@ dotenv.config();
 
 const app = express();
 
-// CORS setup - allows your frontend ports
+// CORS setup
 const corsOptions = {
   origin: [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:5175",
-  "https://4mc5jg3p-3001.inc1.devtunnels.ms",
-  "https://qbrl81gb-5000.inc1.devtunnels.ms",
-],
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "https://4mc5jg3p-3001.inc1.devtunnels.ms",
+    "https://qbrl81gb-5000.inc1.devtunnels.ms",
+  ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -27,10 +27,15 @@ app.use(express.json());
 const connectDB = require("./config/db");
 connectDB();
 
-// User routes
+// Routes
 const userRoutes = require("./routes/userRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
+// User routes
 app.use("/api/users", userRoutes);
+
+// Task routes
+app.use("/api/tasks", taskRoutes);
 
 // Test route
 app.get("/", (req, res) => {
