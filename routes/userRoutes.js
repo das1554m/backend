@@ -13,7 +13,7 @@ const {
 const auth = require("../middleware/Auth");
 const admin = require("../middleware/admin");
 
-const User = require("../models/User");
+const User = require("../models/user");
 
 // Public Routes
 router.post("/register", register);
