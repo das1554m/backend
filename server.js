@@ -12,15 +12,27 @@ const corsOptions = {
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:5175",
+
+    // Old DevTunnel URLs
     "https://4mc5jg3p-3001.inc1.devtunnels.ms",
     "https://qbrl81gb-5000.inc1.devtunnels.ms",
+
+    // Vercel Frontend URL
+    "https://taskmanagement-frontend.vercel.app"
   ],
+
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization"
+  ],
+
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // DB connect
